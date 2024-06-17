@@ -5,7 +5,7 @@ const routes = require('./Routes/Routes');
 
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:4200',
+    origin: 'https://singular-muffin-717fae.netlify.app/',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
 }));
