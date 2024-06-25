@@ -26,6 +26,10 @@ app.use(cors({
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
 }));
+
+// Manejo explícito de solicitudes OPTIONS (preflight)
+app.options('*', cors());
+
 app.use('/uploads', express.static('uploads'));
 
 // Asegúrate de que la carpeta de carga exista
