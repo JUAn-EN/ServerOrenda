@@ -50,5 +50,6 @@ app.use((err, req, res, next) => {
     res.status(500).send('¡Algo salió mal!');
 });
 
-module.exports = app;
 app.use("/api", routes);
+
+module.exports = app;
