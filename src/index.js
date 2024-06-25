@@ -1,10 +1,7 @@
 const express = require('express');
+const app = express();
 const cors = require('cors');
 const routes = require('./Routes/Routes');
-const verifyToken = require('./Middleware/verifyToken'); // Asegúrate de que esta ruta sea correcta
-require('dotenv').config();
-
-const app = express();
 
 // Lista de orígenes permitidos
 const allowedOrigins = [
@@ -13,7 +10,6 @@ const allowedOrigins = [
 ];
 
 app.use(express.json());
-
 app.use(cors({
     origin: function (origin, callback) {
         // Permitir solicitudes sin origen (como las realizadas por herramientas como Postman)
@@ -30,10 +26,6 @@ app.use(cors({
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
 }));
-
-// Manejo explícito de solicitudes OPTIONS (preflight)
-app.options('*', cors());
-
 app.use('/uploads', express.static('uploads'));
 
 // Asegúrate de que la carpeta de carga exista
@@ -52,13 +44,12 @@ app.use((req, res, next) => {
     next();
 });
 
-// Usar el middleware de JWT para rutas protegidas
-app.use("/api", verifyToken, routes);
-
-// Manejo de errores global
+// Después de tus rutas
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('¡Algo salió mal!');
 });
+
+app.use("/api", routes);
 
 module.exports = app;
